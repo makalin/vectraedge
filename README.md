@@ -1,7 +1,7 @@
 # VectraEdge 🚀
 *An in-process, AI-native, real-time OLAP engine with vector search & streaming CDC.*
 
-[![CI](https://github.com/vectraedge/vectra/workflows/CI/badge.svg)](https://github.com/vectraedge/vectra/actions)
+[![CI](https://github.com/makalin/vectraedge/workflows/CI/badge.svg)](https://github.com/makalin/vectraedge/actions)
 [![Crates.io](https://img.shields.io/crates/v/vectra?label=crates)](https://crates.io/crates/vectra)
 [![PyPI](https://img.shields.io/crates/v/vectra?label=pypi)](https://pypi.org/project/vectra/)
 [![Docker](https://img.shields.io/docker/v/vectraedge/vectra?color=blue&label=docker)](https://hub.docker.com/r/vectraedge/vectra)
@@ -424,12 +424,20 @@ See [LICENSE](LICENSE) for details.
 
 ---
 
+## 📚 Documentation
+
+- **[Getting Started](docs/getting-started.md)** - Quick setup and first steps
+- **[User Guide](docs/user-guide.md)** - Core features and usage examples
+- **[API Reference](docs/api-reference.md)** - Complete API documentation
+- **[Deployment Guide](docs/deployment.md)** - Production deployment guides
+- **[Contributing](docs/contributing.md)** - How to contribute to VectraEdge
+
 ## 📞 Support
 
-- **Documentation**: [docs.vectraedge.com](https://docs.vectraedge.com)
-- **Issues**: [GitHub Issues](https://github.com/vectraedge/vectra/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/vectraedge/vectra/discussions)
-- **Email**: team@vectraedge.com
+- **Documentation**: [Project Docs](docs/) - Comprehensive guides and references
+- **Issues**: [GitHub Issues](https://github.com/makalin/vectraedge/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/makalin/vectraedge/discussions)
+- **Email**: makalin@gmail.com
 
 ---
 
