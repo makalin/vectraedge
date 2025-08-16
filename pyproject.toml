@@ -1,0 +1,76 @@
+[build-system]
+requires = ["maturin>=1.0,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "vectra"
+version = "0.1.0"
+description = "Python bindings for VectraEdge - AI-Native OLAP Engine"
+readme = "README.md"
+license = {text = "MIT OR Apache-2.0"}
+authors = [
+    {name = "VectraEdge Team", email = "team@vectraedge.com"}
+]
+maintainers = [
+    {name = "VectraEdge Team", email = "team@vectraedge.com"}
+]
+keywords = ["database", "olap", "vector-search", "ai", "streaming", "cdc"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Database",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "numpy>=1.20.0",
+    "pandas>=1.3.0",
+    "pyarrow>=10.0.0",
+    "requests>=2.25.0",
+    "pydantic>=1.8.0",
+    "asyncio-mqtt>=0.11.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0.0",
+    "pytest-asyncio>=0.18.0",
+    "black>=21.0.0",
+    "isort>=5.0.0",
+    "mypy>=0.910",
+    "ruff>=0.0.200",
+]
+docs = [
+    "sphinx>=4.0.0",
+    "sphinx-rtd-theme>=1.0.0",
+    "myst-parser>=0.15.0",
+]
+examples = [
+    "jupyter>=1.0.0",
+    "matplotlib>=3.3.0",
+    "seaborn>=0.11.0",
+    "scikit-learn>=1.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/vectraedge/vectra"
+Documentation = "https://docs.vectraedge.com"
+Repository = "https://github.com/vectraedge/vectra"
+"Bug Tracker" = "https://github.com/vectraedge/vectra/issues"
+
+[project.scripts]
+vectra = "vectra.cli:main"
+
+[tool.maturin]
+features = ["pyo3/extension-module"]

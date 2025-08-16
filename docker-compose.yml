@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+  vectra:
+    build: .
+    container_name: vectra-edge
+    ports:
+      - "8080:8080"  # HTTP API
+      - "6432:6432"  # PostgreSQL wire protocol
+    environment:
+      - VECTRA_HOST=0.0.0.0
+      - VECTRA_PORT=8080
+      - VECTRA_DATA_DIR=/app/data
+      - VECTRA_LOG_LEVEL=info
+      - VECTRA_VECTOR_DIMENSION=384
+      - VECTRA_HNSW_M=16
+      - VECTRA_OLLAMA_URL=http://ollama:11434
+      - VECTRA_REDPANDA_BROKERS=redpanda:9092
+    volumes:
+      - vectra_data:/app/data
+      - ./config:/app/config:ro
+    depends_on:
+      - redpanda
+      - ollama
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "vectra-cli", "health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  redpanda:
+    image: vectorized/redpanda:latest
+    container_name: vectra-redpanda
+    ports:
+      - "9092:9092"
+      - "8081:8081"
+    environment:
+      - REDPANDA_BROKERS=redpanda:9092
+      - REDPANDA_ADMIN_ADDR=0.0.0.0:8081
+    volumes:
+      - redpanda_data:/var/lib/redpanda/data
+    command:
+      - redpanda
+      - start
+      - --smp 1
+      - --memory 1G
+      - --reserve-memory 0M
+      - --overprovisioned
+      - --node-id 0
+      - --check=false
+      - --pandaproxy-addr 0.0.0.0:8082
+      - --advertise-pandaproxy-addr redpanda:8082
+      - --kafka-addr 0.0.0.0:9092
+      - --advertise-kafka-addr redpanda:9092
+      - --rpc-addr 0.0.0.0:11022
+      - --advertise-rpc-addr redpanda:11022
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: vectra-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    restart: unless-stopped
+    command: ollama serve
+
+  playground:
+    build: ./playground
+    container_name: vectra-playground
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_VECTRA_API_URL=http://localhost:8080
+    depends_on:
+      - vectra
+    restart: unless-stopped
+
+volumes:
+  vectra_data:
+    driver: local
+  redpanda_data:
+    driver: local
+  ollama_data:
+    driver: local
+
+networks:
+  default:
+    name: vectra-network
